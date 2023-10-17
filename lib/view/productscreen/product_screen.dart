@@ -5,8 +5,8 @@ import 'package:online_shopping/view/widgets/product_card.dart';
 import 'package:provider/provider.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
-  ProductDetailsScreen({super.key, required this.name, required this.index});
-  final String name;
+  ProductDetailsScreen({super.key, required this.index});
+
   final int index;
 
   @override
@@ -17,28 +17,34 @@ class ProductDetailsScreen extends StatelessWidget {
         centerTitle: true,
         actions: [
           context.read<ProviderShop>().cartcount == 0
-              ? IconButton(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => MyCart(),
-                    ));
-                  },
-                  icon: Icon(
-                    Icons.shopping_cart,
-                    size: 40,
-                  ))
+              ? Padding(
+                  padding: const EdgeInsets.only(right: 10.0),
+                  child: IconButton(
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => MyCart(),
+                        ));
+                      },
+                      icon: Icon(
+                        Icons.shopping_cart,
+                        size: 40,
+                      )),
+                )
               : Stack(
                   children: [
-                    IconButton(
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => MyCart(),
-                          ));
-                        },
-                        icon: Icon(
-                          Icons.shopping_cart,
-                          size: 40,
-                        )),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10.0),
+                      child: IconButton(
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => MyCart(),
+                            ));
+                          },
+                          icon: Icon(
+                            Icons.shopping_cart,
+                            size: 40,
+                          )),
+                    ),
                     Positioned(
                         right: 3,
                         child: CircleAvatar(
@@ -59,11 +65,12 @@ class ProductDetailsScreen extends StatelessWidget {
             padding: const EdgeInsets.all(10.0),
             child: Container(
               height: 350,
-              child: ProductCard(image: name),
+              child: ProductCard(
+                  image: context.read<ProviderShop>().items[index].image),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(15.0),
             child: Text(context.read<ProviderShop>().items[index].description),
           ),
           Row(
@@ -76,23 +83,34 @@ class ProductDetailsScreen extends StatelessWidget {
                         color: Colors.grey.shade300,
                         borderRadius: BorderRadius.circular(20)),
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(15.0),
                       child: Text("Price :2000"),
                     )),
               ),
-              Row(
-                children: [
-                  TextButton.icon(
-                      label: Text("Add"),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                  children: [
+                    ElevatedButton(
+                      style: ButtonStyle(
+                          foregroundColor:
+                              MaterialStatePropertyAll(Colors.white),
+                          backgroundColor:
+                              MaterialStatePropertyAll(Colors.black)),
+                      // label: Text("Add"),
                       onPressed: () {
                         // adding an item into cart
                         context.read<ProviderShop>().addTocart(
                             // adding items in itemList into cartList
                             context.read<ProviderShop>().items[index]);
                       },
-                      icon: Icon(Icons.add)),
-                  TextButton.icon(
-                      label: Text("remove"),
+                      child: Text("Add"),
+                    ),
+                    SizedBox(
+                      width: 15,
+                    ),
+                    ElevatedButton(
+                      // label: Text("remove"),
                       onPressed:
                           // if cart item count = 0 the remove button will disable or not working using null
                           context.watch<ProviderShop>().items[index].count == 0
@@ -105,9 +123,11 @@ class ProductDetailsScreen extends StatelessWidget {
                                           .read<ProviderShop>()
                                           .items[index]);
                                 },
-                      icon: Icon(Icons.remove)),
-                ],
-              )
+                      child: Text("Remove"),
+                    ),
+                  ],
+                ),
+              ),
             ],
           )
         ],

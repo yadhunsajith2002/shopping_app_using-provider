@@ -58,7 +58,7 @@ class ProviderShop with ChangeNotifier {
   List<ShoppingModel> _cartItem = [];
   int _cartCount = 0;
   int _price = 0;
-
+// use getters for accesing private variables on another screen
   List<ShoppingModel> get items => _items;
   List<ShoppingModel> get cartitems => _cartItem;
   int get itemCount => _items.length;
@@ -70,7 +70,7 @@ class ProviderShop with ChangeNotifier {
     // checking the cart have datas(Shopping model)
     if (_cartItem.contains(item)) {
       // if the cart have datas then increase the count with index
-      // count-- used to removing item one by one
+      // count++ used to adding item one by one
       _cartItem[_cartItem.indexOf(item)].count++;
       // if cart item have no datas then add datas into cart
     } else {
@@ -111,6 +111,24 @@ class ProviderShop with ChangeNotifier {
     // update the price with removing 2000
     // when removing one item the total price decrease with the price 2000
     _price = _price - 2000;
+    notifyListeners();
+  }
+
+  void deleteFromCart(int index, ShoppingModel item) {
+    if (_cartItem.contains(item) &&
+        _cartItem[_cartItem.indexOf(item)].count > 0) {
+      _price = _price - (_cartItem[_cartItem.indexOf(item)].count * 2000);
+      _cartCount -= _cartItem[_cartItem.indexOf(item)].count;
+      _items[_items.indexOf(item)].count = 0;
+      _cartItem[_cartItem.indexOf(item)].count = 0;
+    }
+    _cartItem.removeAt(index);
+    notifyListeners();
+  }
+
+  int currentIndex = 0;
+  void onTap(int selectedIndex) {
+    currentIndex = selectedIndex;
     notifyListeners();
   }
 }
