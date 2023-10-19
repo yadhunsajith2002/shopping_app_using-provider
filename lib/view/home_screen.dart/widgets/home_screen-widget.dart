@@ -3,7 +3,7 @@ import 'package:online_shopping/constants/name_constants.dart';
 import 'package:online_shopping/provider/shopping_provider.dart';
 import 'package:online_shopping/view/myCartScreen/cart_Screen.dart';
 import 'package:online_shopping/view/productscreen/product_screen.dart';
-import 'package:online_shopping/view/widgets/product_card.dart';
+import 'package:online_shopping/view/productscreen/widgets/product_card.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreenWidget extends StatelessWidget {
@@ -33,7 +33,7 @@ class HomeScreenWidget extends StatelessWidget {
                       },
                       icon: Icon(
                         Icons.shopping_cart,
-                        size: 40,
+                        size: 30,
                       )),
                 )
               : Stack(
@@ -48,7 +48,7 @@ class HomeScreenWidget extends StatelessWidget {
                           },
                           icon: Icon(
                             Icons.shopping_cart,
-                            size: 40,
+                            size: 30,
                           )),
                     ),
                     Positioned(
@@ -70,8 +70,11 @@ class HomeScreenWidget extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: SearchBar(
+              leading: Icon(Icons.search),
               elevation: MaterialStatePropertyAll(5),
               hintText: "Search here",
+              hintStyle: MaterialStatePropertyAll<TextStyle>(
+                  TextStyle(color: Colors.grey)),
             ),
           ),
           Padding(

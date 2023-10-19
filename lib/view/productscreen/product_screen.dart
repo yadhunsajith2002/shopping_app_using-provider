@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:online_shopping/provider/shopping_provider.dart';
 import 'package:online_shopping/view/myCartScreen/cart_Screen.dart';
-import 'package:online_shopping/view/widgets/product_card.dart';
+import 'package:online_shopping/view/productscreen/widgets/product_card.dart';
 import 'package:provider/provider.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
@@ -27,7 +27,7 @@ class ProductDetailsScreen extends StatelessWidget {
                       },
                       icon: Icon(
                         Icons.shopping_cart,
-                        size: 40,
+                        size: 30,
                       )),
                 )
               : Stack(
@@ -42,11 +42,11 @@ class ProductDetailsScreen extends StatelessWidget {
                           },
                           icon: Icon(
                             Icons.shopping_cart,
-                            size: 40,
+                            size: 30,
                           )),
                     ),
                     Positioned(
-                        right: 3,
+                        right: 6,
                         child: CircleAvatar(
                           backgroundColor: Colors.red,
                           foregroundColor: Colors.white,
@@ -59,79 +59,83 @@ class ProductDetailsScreen extends StatelessWidget {
                 )
         ],
       ),
-      body: ListView(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Container(
-              height: 350,
-              child: ProductCard(
-                  image: context.read<ProviderShop>().items[index].image),
+      body: Consumer<ProviderShop>(builder: (context, value, child) {
+        return ListView(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Container(
+                height: 350,
+                child: ProductCard(
+                    image: context.read<ProviderShop>().items[index].image),
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Text(context.read<ProviderShop>().items[index].description),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.grey.shade300,
-                        borderRadius: BorderRadius.circular(20)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Text("Price :2000"),
-                    )),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  children: [
-                    ElevatedButton(
-                      style: ButtonStyle(
-                          foregroundColor:
-                              MaterialStatePropertyAll(Colors.white),
-                          backgroundColor:
-                              MaterialStatePropertyAll(Colors.black)),
-                      // label: Text("Add"),
-                      onPressed: () {
-                        // adding an item into cart
-                        context.read<ProviderShop>().addTocart(
-                            // adding items in itemList into cartList
-                            context.read<ProviderShop>().items[index]);
-                      },
-                      child: Text("Add"),
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    ElevatedButton(
-                      // label: Text("remove"),
-                      onPressed:
-                          // if cart item count = 0 the remove button will disable or not working using null
-                          context.watch<ProviderShop>().items[index].count == 0
-                              ? null
-                              : () {
-                                  // removing an item into cart
-                                  context.read<ProviderShop>().removeFromcart(
-                                      // removing items from the cartList if cartlist have two or more same item then remove item one by one
-                                      context
-                                          .read<ProviderShop>()
-                                          .items[index]);
-                                },
-                      child: Text("Remove"),
-                    ),
-                  ],
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child:
+                  Text(context.read<ProviderShop>().items[index].description),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.grey.shade300,
+                          borderRadius: BorderRadius.circular(20)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Text("Price :2000"),
+                      )),
                 ),
-              ),
-            ],
-          )
-        ],
-      ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Row(
+                    children: [
+                      ElevatedButton(
+                        style: ButtonStyle(
+                            foregroundColor:
+                                MaterialStatePropertyAll(Colors.white),
+                            backgroundColor:
+                                MaterialStatePropertyAll(Colors.black)),
+                        // label: Text("Add"),
+                        onPressed: () {
+                          // adding an item into cart
+                          context.read<ProviderShop>().addTocart(
+                              // adding items in itemList into cartList
+                              context.read<ProviderShop>().items[index]);
+                        },
+                        child: Text("Add"),
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      ElevatedButton(
+                        // label: Text("remove"),
+                        onPressed:
+                            // if cart item count = 0 the remove button will disable or not working using null
+                            context.watch<ProviderShop>().items[index].count ==
+                                    0
+                                ? null
+                                : () {
+                                    // removing an item into cart
+                                    context.read<ProviderShop>().removeFromcart(
+                                        // removing items from the cartList if cartlist have two or more same item then remove item one by one
+                                        context
+                                            .read<ProviderShop>()
+                                            .items[index]);
+                                  },
+                        child: Text("Remove"),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            )
+          ],
+        );
+      }),
       bottomNavigationBar: Container(
         height: 70,
         color: Colors.black,
