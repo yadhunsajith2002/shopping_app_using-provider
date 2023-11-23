@@ -65,9 +65,12 @@ class MyCart extends StatelessWidget {
                                           ),
                                         ),
                                       ),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
                                       Padding(
                                         padding: const EdgeInsets.symmetric(
-                                            horizontal: 15, vertical: 15),
+                                            horizontal: 0, vertical: 15),
                                         child: Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.start,
@@ -86,6 +89,7 @@ class MyCart extends StatelessWidget {
                                               height: 15,
                                             ),
                                             Row(
+                                              mainAxisSize: MainAxisSize.min,
                                               children: [
                                                 ElevatedButton(
                                                   style: ButtonStyle(
